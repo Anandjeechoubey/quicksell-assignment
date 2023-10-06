@@ -9,10 +9,14 @@ import Header from "./components/Header";
 import Group from "./components/Group";
 
 // constants
-import { PriorityLevels, ProgressLevels, GroupingOptions } from "./constants";
+import {
+  PriorityLevels,
+  // ProgressLevels,
+  // GroupingOptions
+} from "./constants";
 
 function App() {
-  const [tickets, setTickets] = useState([]);
+  // const [tickets, setTickets] = useState([]);
   const [users, setUsers] = useState([]);
   const [groups, setGroups] = useState([]);
 
@@ -26,7 +30,6 @@ function App() {
     axios
       .get("https://api.quicksell.co/v1/internal/frontend-assignment")
       .then((res) => {
-        setTickets(res.data.tickets);
         setUsers(res.data.users);
         const p = res.data.tickets.reduce((acc, ticket) => {
           const priority = PriorityLevels[ticket.priority];
