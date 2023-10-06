@@ -13,3 +13,4 @@ export const ProgressLevels = [
   "Cancelled",
 ];
 export const GroupingOptions = ["By Status", "By User", "By Priority"];
+export const OrderingOptions = ["Priority", "Title"];

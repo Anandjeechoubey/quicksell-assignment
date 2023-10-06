@@ -21,10 +21,12 @@ function App() {
   const [groups, setGroups] = useState([]);
 
   const [grouping, setGrouping] = useState(0);
+  const [ordering, setOrdering] = useState(0);
   const [byPriority, setByPriority] = useState([]);
   const [byUser, setByUser] = useState([]);
   const [byStatus, setByStatus] = useState([]);
-  const [ordering, setOrdering] = useState("Grouping");
+
+  const [usernames, setUsernames] = useState([]);
 
   useEffect(() => {
     axios
@@ -39,9 +41,11 @@ function App() {
         }, []);
         setByPriority(p);
         setGroups(p);
+        console.log("t", res.data.users);
         setByUser(
           res.data.tickets.reduce((acc, ticket) => {
-            const userId = ticket.userId;
+            const userId =
+              res.data.users[parseInt(ticket.userId.split("-")[1]) - 1].name;
             acc[userId] = acc[userId] || [];
             acc[userId].push(ticket);
             return acc;
@@ -59,12 +63,16 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("Elvish Bhayy", byPriority);
-  }, [byPriority, byUser, byStatus]);
+    if (grouping === 0) {
+      setGroups(byPriority);
+    } else if (grouping === 1) {
+      setGroups(byUser);
+      console.log(byUser);
+    } else if (grouping === 2) {
+      setGroups(byStatus);
+    }
+  }, [grouping]);
 
-  useEffect(() => {
-    console.log("Grpss:", groups);
-  }, [groups]);
   return (
     <body className="App">
       <Header
@@ -90,6 +98,7 @@ function App() {
               key={id}
               users={users}
               name={group}
+              grouping={grouping}
               tasks={Object.values(groups)[id]}
             />
           );
