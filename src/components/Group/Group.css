@@ -1,0 +1,15 @@
+.Group {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: scroll;
+    transition: all 0.3s ease-in-out;
+}
+
+.Group__header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
