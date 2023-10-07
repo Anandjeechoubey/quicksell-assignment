@@ -14,6 +14,7 @@ import {
   ProgressLevels,
   // GroupingOptions
 } from "./constants";
+import Footer from "./components/Footer";
 
 function App() {
   // const [tickets, setTickets] = useState([]);
@@ -112,6 +113,7 @@ function App() {
           );
         })}
       </main>
+      <Footer />
     </body>
   );
 }
