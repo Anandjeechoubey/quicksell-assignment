@@ -26,7 +26,7 @@ function App() {
   const [byUser, setByUser] = useState([]);
   const [byStatus, setByStatus] = useState([]);
 
-  const [usernames, setUsernames] = useState([]);
+  // const [usernames, setUsernames] = useState([]);
 
   useEffect(() => {
     axios
@@ -71,7 +71,7 @@ function App() {
     } else if (grouping === 2) {
       setGroups(byStatus);
     }
-  }, [grouping]);
+  }, [grouping, byPriority, byUser, byStatus]);
 
   return (
     <body className="App">
