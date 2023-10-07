@@ -7,7 +7,10 @@ import Tag from "../Tag";
 // components
 import Avatar from "../Avatar";
 
-const Card = ({ data, user }) => {
+// icons
+import { priorityIcons, progressIcons } from "../Icons";
+
+const Card = ({ data, user, grouping }) => {
   const { title, tag, id } = data;
   const name = user.name;
   const userId = parseInt(user.id.split("-")[1]) - 1;
@@ -21,12 +24,23 @@ const Card = ({ data, user }) => {
     <div className="Card">
       <header className="Card__header">
         <span>{id}</span>
-        <Avatar initial={initial} available={user.available} id={userId} />
+        {grouping !== 1 && (
+          <Avatar initial={initial} available={user.available} id={userId} />
+        )}
       </header>
-      <section style={{ flexGrow: 1 }}>
+      <section
+        style={{
+          flexGrow: 1,
+          display: "flex",
+          gap: "1rem",
+          alignItems: "center",
+        }}
+      >
+        {grouping !== 0 && progressIcons(data.status)}
         <p>{title}</p>
       </section>
-      <footer>
+      <footer style={{ gap: "1rem", display: "flex", alignItems: "center" }}>
+        {grouping !== 2 && <span>{priorityIcons(data.priority)}</span>}
         {tag.map((tag, id) => {
           return <Tag key={id} text={tag} />;
         })}

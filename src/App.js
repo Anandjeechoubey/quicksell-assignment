@@ -11,7 +11,7 @@ import Group from "./components/Group";
 // constants
 import {
   PriorityLevels,
-  // ProgressLevels,
+  ProgressLevels,
   // GroupingOptions
 } from "./constants";
 
@@ -20,7 +20,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [groups, setGroups] = useState([]);
 
-  const [grouping, setGrouping] = useState(0);
+  const [grouping, setGrouping] = useState(2);
   const [ordering, setOrdering] = useState(0);
   const [byPriority, setByPriority] = useState([]);
   const [byUser, setByUser] = useState([]);
@@ -33,15 +33,22 @@ function App() {
       .get("https://api.quicksell.co/v1/internal/frontend-assignment")
       .then((res) => {
         setUsers(res.data.users);
-        const p = res.data.tickets.reduce((acc, ticket) => {
+        // const p = res.data.tickets.reduce((acc, ticket) => {
+        //   const priority = PriorityLevels[ticket.priority];
+        //   acc[priority] = acc[priority] || [];
+        //   acc[priority].push(ticket);
+        //   return acc;
+        // }, []);
+        const p = {};
+        PriorityLevels.forEach((level) => {
+          p[level] = [];
+        });
+        res.data.tickets.forEach((ticket) => {
           const priority = PriorityLevels[ticket.priority];
-          acc[priority] = acc[priority] || [];
-          acc[priority].push(ticket);
-          return acc;
-        }, []);
+          p[priority].push(ticket);
+        });
         setByPriority(p);
         setGroups(p);
-        console.log("t", res.data.users);
         setByUser(
           res.data.tickets.reduce((acc, ticket) => {
             const userId =
@@ -51,25 +58,25 @@ function App() {
             return acc;
           }, [])
         );
-        setByStatus(
-          res.data.tickets.reduce((acc, ticket) => {
-            const status = ticket.status;
-            acc[status] = acc[status] || [];
-            acc[status].push(ticket);
-            return acc;
-          }, [])
-        );
+        const s = {};
+        ProgressLevels.forEach((level) => {
+          s[level] = [];
+        });
+        res.data.tickets.forEach((ticket) => {
+          const status = ticket.status;
+          s[status].push(ticket);
+        });
+        setByStatus(s);
       });
   }, []);
 
   useEffect(() => {
     if (grouping === 0) {
-      setGroups(byPriority);
+      setGroups(byStatus);
     } else if (grouping === 1) {
       setGroups(byUser);
-      console.log(byUser);
     } else if (grouping === 2) {
-      setGroups(byStatus);
+      setGroups(byPriority);
     }
   }, [grouping, byPriority, byUser, byStatus]);
 
@@ -99,6 +106,7 @@ function App() {
               users={users}
               name={group}
               grouping={grouping}
+              ordering={ordering}
               tasks={Object.values(groups)[id]}
             />
           );
