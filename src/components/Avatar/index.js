@@ -11,7 +11,7 @@ const Avatar = ({ initial, id, available = false }) => {
 
   return (
     <div className="Avatar" style={{ backgroundColor: colors[id % 5] }}>
-      {initial}
+      <span style={{ fontSize: "smaller" }}>{initial}</span>
       <div
         className="Online__indicator"
         style={{ backgroundColor: availableColor }}

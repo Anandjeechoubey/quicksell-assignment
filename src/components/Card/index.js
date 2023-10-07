@@ -23,7 +23,7 @@ const Card = ({ data, user, grouping }) => {
   return (
     <div className="Card">
       <header className="Card__header">
-        <span>{id}</span>
+        <span style={{ fontSize: "medium" }}>{id}</span>
         {grouping !== 1 && (
           <Avatar initial={initial} available={user.available} id={userId} />
         )}
@@ -37,7 +37,7 @@ const Card = ({ data, user, grouping }) => {
         }}
       >
         {grouping !== 0 && progressIcons(data.status)}
-        <p>{title}</p>
+        <p style={{ fontSize: "small" }}>{title}</p>
       </section>
       <footer style={{ gap: "1rem", display: "flex", alignItems: "center" }}>
         {grouping !== 2 && <span>{priorityIcons(data.priority)}</span>}

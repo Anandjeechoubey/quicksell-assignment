@@ -88,7 +88,7 @@ function App() {
         style={{
           display: "flex",
           padding: "4rem",
-          gap: "3rem",
+          gap: "5rem",
           overflow: "scroll",
           scrollbarColor: "#fff #fff",
           minHeight: "calc(100vh - 18rem)",

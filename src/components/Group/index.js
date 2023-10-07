@@ -39,10 +39,10 @@ const Group = ({ tasks, name, width, users, grouping, ordering }) => {
           <Avatar initial={initial} id={userId} available={user.available} />
         )}
         {grouping === 2 && priorityIcons(name)}
-        <span style={{ fontWeight: "bold" }}> {name}</span>
+        <span style={{ fontWeight: "bold", fontSize: "small" }}> {name}</span>
         <span style={{ color: "#666", flexGrow: 1 }}> {tasks.length}</span>
-        <AddIcon style={{ color: "#666" }} />
-        <MoreHorizIcon style={{ color: "#666" }} />
+        <AddIcon style={{ color: "#666", fontSize: "small" }} />
+        <MoreHorizIcon style={{ color: "#666", fontSize: "small" }} />
       </header>
       {tasks.map((task, id) => {
         return (
