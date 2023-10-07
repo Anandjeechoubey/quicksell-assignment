@@ -9,37 +9,32 @@ import Header from "./components/Header";
 import Group from "./components/Group";
 
 // constants
-import {
-  PriorityLevels,
-  ProgressLevels,
-  // GroupingOptions
-} from "./constants";
+import { PriorityLevels, ProgressLevels } from "./constants";
 import Footer from "./components/Footer";
 
 function App() {
-  // const [tickets, setTickets] = useState([]);
   const [users, setUsers] = useState([]);
   const [groups, setGroups] = useState([]);
 
-  const [grouping, setGrouping] = useState(2);
-  const [ordering, setOrdering] = useState(0);
+  const [grouping, setGrouping] = useState(
+    localStorage.getItem("grouping") !== null
+      ? parseInt(localStorage.getItem("grouping"))
+      : 2
+  );
+  const [ordering, setOrdering] = useState(
+    localStorage.getItem("ordering") !== null
+      ? parseInt(localStorage.getItem("ordering"))
+      : 0
+  );
   const [byPriority, setByPriority] = useState([]);
   const [byUser, setByUser] = useState([]);
   const [byStatus, setByStatus] = useState([]);
-
-  // const [usernames, setUsernames] = useState([]);
 
   useEffect(() => {
     axios
       .get("https://api.quicksell.co/v1/internal/frontend-assignment")
       .then((res) => {
         setUsers(res.data.users);
-        // const p = res.data.tickets.reduce((acc, ticket) => {
-        //   const priority = PriorityLevels[ticket.priority];
-        //   acc[priority] = acc[priority] || [];
-        //   acc[priority].push(ticket);
-        //   return acc;
-        // }, []);
         const p = {};
         PriorityLevels.forEach((level) => {
           p[level] = [];
@@ -49,16 +44,14 @@ function App() {
           p[priority].push(ticket);
         });
         setByPriority(p);
-        setGroups(p);
-        setByUser(
-          res.data.tickets.reduce((acc, ticket) => {
-            const userId =
-              res.data.users[parseInt(ticket.userId.split("-")[1]) - 1].name;
-            acc[userId] = acc[userId] || [];
-            acc[userId].push(ticket);
-            return acc;
-          }, [])
-        );
+        const u = res.data.tickets.reduce((acc, ticket) => {
+          const userId =
+            res.data.users[parseInt(ticket.userId.split("-")[1]) - 1].name;
+          acc[userId] = acc[userId] || [];
+          acc[userId].push(ticket);
+          return acc;
+        }, []);
+        setByUser(u);
         const s = {};
         ProgressLevels.forEach((level) => {
           s[level] = [];
@@ -68,8 +61,10 @@ function App() {
           s[status].push(ticket);
         });
         setByStatus(s);
+
+        setGroups(grouping === 0 ? s : grouping === 1 ? u : p);
       });
-  }, []);
+  }, [grouping]);
 
   useEffect(() => {
     if (grouping === 0) {

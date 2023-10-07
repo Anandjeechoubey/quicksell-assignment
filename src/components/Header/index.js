@@ -62,7 +62,10 @@ const Header = ({ grouping, setGrouping, ordering, setOrdering }) => {
                           cursor: "pointer",
                         }}
                         key={id}
-                        onClick={() => setGrouping(id)}
+                        onClick={() => {
+                          setGrouping(id);
+                          localStorage.setItem("grouping", id);
+                        }}
                       >
                         {option}
                       </button>
@@ -99,7 +102,10 @@ const Header = ({ grouping, setGrouping, ordering, setOrdering }) => {
                           cursor: "pointer",
                         }}
                         key={id}
-                        onClick={() => setOrdering(id)}
+                        onClick={() => {
+                          setOrdering(id);
+                          localStorage.setItem("ordering", id);
+                        }}
                       >
                         {option}
                       </button>
