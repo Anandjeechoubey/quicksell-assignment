@@ -1,9 +1,9 @@
 export const PriorityLevels = [
   "No Priority",
-  "Urgent",
   "Low",
   "Medium",
   "High",
+  "Urgent",
 ];
 export const ProgressLevels = [
   "Backlog",

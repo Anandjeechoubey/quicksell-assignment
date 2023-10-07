@@ -18,8 +18,8 @@ const Group = ({ tasks, name, width, users, grouping, ordering }) => {
         .map((n) => n[0].toUpperCase())
         .join("")
     : "I";
-  if (ordering === 0) tasks.sort((a, b) => a.priority - b.priority);
-  if (ordering === 1) tasks.sort((a, b) => b.title - a.title);
+  if (ordering === 0) tasks.sort((a, b) => b.priority - a.priority);
+  if (ordering === 1) tasks.sort((a, b) => a.title.localeCompare(b.title));
 
   const user = users.find((user) => user.name === name) || {
     id: "usr-1",
